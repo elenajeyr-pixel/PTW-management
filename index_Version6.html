@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PTW Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: #fff;
+            margin: 20px auto;
+            padding: 32px;
+            max-width: 700px;
+            border-radius: 8px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.07);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        h2, .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 32px;
+            margin-bottom: 8px;
+        }
+        label {
+            display: block;
+            margin-top: 16px;
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+        input[type="text"], input[type="date"], input[type="datetime-local"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            box-sizing: border-box;
+            background: #fafafa;
+        }
+        textarea {
+            resize: vertical;
+        }
+        .row {
+            margin-bottom: 12px;
+        }
+        .button-group {
+            margin-top: 24px;
+            display: flex;
+            gap: 12px;
+        }
+        button {
+            padding: 10px 28px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px;
+            background: #4379ff;
+            color: #fff;
+            cursor: pointer;
+        }
+        button[type="reset"] {
+            background: #556cff;
+        }
+        button:hover {
+            background: #3152b8;
+        }
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        #qrcode {
+            margin-top: 32px;
+            text-align: center;
+        }
+        #rescueSection {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PTW Management</h1>
+        <form id="ptwForm">
+            <!-- PTW Section -->
+            <label for="ptwType">PTW Type:</label>
+            <select id="ptwType" name="ptwType">
+                <option>Hot Work</option>
+                <option>Enclosed Space</option>
+                <option>Work at Height</option>
+                <option>Elevator</option>
+                <option>Other</option>
+            </select>
+            <label for="workDescription">Work Description:</label>
+            <input type="text" id="workDescription" name="workDescription" placeholder="Describe the work">
+
+            <label for="department">Department:</label>
+            <select id="department" name="department">
+                <option>Deck</option>
+                <option>Engine</option>
+                <option>Hotel</option>
+                <option>IT</option>
+                <option>Other</option>
+            </select>
+            <!-- Point of Contact Ship REMOVED -->
+
+            <!-- Company Section -->
+            <div class="section-title">Company</div>
+            <label for="companyName">Company's Name:</label>
+            <input type="text" id="companyName" name="companyName">
+
+            <label for="companyContact">Supervisor's Name:</label>
+            <input type="text" id="companyContact" name="companyContact">
+
+            <label for="workers">Included Workers:</label>
+            <input type="text" id="workers" name="workers">
+
+            <!-- Location Details Section -->
+            <div class="section-title">Location Details</div>
+            <label for="deck">Deck:</label>
+            <select id="deck" name="deck">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                <option>14</option>
+                <option>15</option>
+                <option>16</option>
+                <option>var</option>
+            </select>
+            <label for="firezone">Firezone:</label>
+            <select id="firezone" name="firezone">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>var</option>
+            </select>
+            <label for="locationDescription">Location Description:</label>
+            <input type="text" id="locationDescription" name="locationDescription">
+
+            <!-- Rescue Section - hidden unless Enclosed Space is selected -->
+            <div id="rescueSection">
+                <div class="section-title">Rescue Point</div>
+                <label for="rescueDeck">Deck:</label>
+                <select id="rescueDeck" name="rescueDeck">
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                    <option>14</option>
+                    <option>15</option>
+                    <option>16</option>
+                    <option>var</option>
+                </select>
+                <label for="rescueFirezone">Firezone:</label>
+                <select id="rescueFirezone" name="rescueFirezone">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>var</option>
+                </select>
+                <label for="rescueLocationDescription">Location Description:</label>
+                <input type="text" id="rescueLocationDescription" name="rescueLocationDescription">
+            </div>
+
+            <!-- Remarks Section -->
+            <div class="section-title">Remarks</div>
+            <label for="remarks">Remarks:</label>
+            <input type="text" id="remarks" name="remarks">
+
+            <!-- PTW Start/End Section -->
+            <div class="section-title">PTW Start / End</div>
+            <label for="ptwStart">PTW Start:</label>
+            <input type="datetime-local" id="ptwStart" name="ptwStart">
+
+            <label for="ptwEnd">PTW End:</label>
+            <input type="datetime-local" id="ptwEnd" name="ptwEnd">
+
+            <label for="nightshiftOption">Nightshift:</label>
+            <select id="nightshiftOption" name="nightshiftOption">
+                <option value="None">None</option>
+                <option value="Plus Nightshift">Plus Nightshift</option>
+                <option value="Only Nightshift">Only Nightshift</option>
+            </select>
+
+            <div class="button-group">
+                <button type="submit">Submit</button>
+                <button type="reset">Reset</button>
+            </div>
+        </form>
+        <div id="qrcode"></div>
+    </div>
+    <script>
+        // Auto-update PTW End when PTW Start changes
+        document.getElementById('ptwStart').addEventListener('change', function() {
+            var startDateTimeStr = this.value;
+            if (!startDateTimeStr) return;
+
+            // Parse start date/time
+            var startDateTime = new Date(startDateTimeStr);
+
+            // Add 24 hours
+            startDateTime.setHours(startDateTime.getHours() + 24);
+
+            // Format as yyyy-MM-ddTHH:mm for datetime-local input
+            var year = startDateTime.getFullYear();
+            var month = String(startDateTime.getMonth()+1).padStart(2, '0');
+            var day = String(startDateTime.getDate()).padStart(2, '0');
+            var hour = String(startDateTime.getHours()).padStart(2, '0');
+            var minute = String(startDateTime.getMinutes()).padStart(2, '0');
+            var endDateTimeStr = `${year}-${month}-${day}T${hour}:${minute}`;
+
+            document.getElementById('ptwEnd').value = endDateTimeStr;
+        });
+
+        // Show/hide Rescue section based on PTW type
+        document.getElementById('ptwType').addEventListener('change', function() {
+            var rescueSection = document.getElementById('rescueSection');
+            if (this.value === "Enclosed Space") {
+                rescueSection.style.display = "block";
+            } else {
+                rescueSection.style.display = "none";
+            }
+        });
+
+        document.getElementById('ptwForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Gather form data
+            var ptwType = document.getElementById('ptwType').value;
+            var workDescription = document.getElementById('workDescription').value;
+            var department = document.getElementById('department').value;
+            var companyName = document.getElementById('companyName').value;
+            var companyContact = document.getElementById('companyContact').value;
+            var workers = document.getElementById('workers').value;
+            var deck = document.getElementById('deck').value;
+            var firezone = document.getElementById('firezone').value;
+            var locationDescription = document.getElementById('locationDescription').value;
+            var remarks = document.getElementById('remarks').value;
+            var ptwStart = document.getElementById('ptwStart').value;
+            var ptwEnd = document.getElementById('ptwEnd').value;
+            var nightshiftOption = document.getElementById('nightshiftOption').value;
+
+            var qrData =
+                `PTW Type: ${ptwType}\n` +
+                `Work Description: ${workDescription}\n` +
+                `Department: ${department}\n` +
+                `Company's Name: ${companyName}\n` +
+                `Supervisor's Name: ${companyContact}\n` +
+                `Included Workers: ${workers}\n` +
+                `Deck: ${deck}\n` +
+                `Firezone: ${firezone}\n` +
+                `Location Description: ${locationDescription}\n`;
+
+            // If Enclosed Space, add Rescue Section
+            if (ptwType === "Enclosed Space") {
+                var rescueDeck = document.getElementById('rescueDeck').value;
+                var rescueFirezone = document.getElementById('rescueFirezone').value;
+                var rescueLocationDescription = document.getElementById('rescueLocationDescription').value;
+                qrData +=
+                    `Rescue Point Deck: ${rescueDeck}\n` +
+                    `Rescue Point Firezone: ${rescueFirezone}\n` +
+                    `Rescue Point Location Description: ${rescueLocationDescription}\n`;
+            }
+
+            qrData +=
+                `Remarks: ${remarks}\n` +
+                `PTW Start: ${ptwStart}\n` +
+                `PTW End: ${ptwEnd}\n` +
+                `Nightshift: ${nightshiftOption}`;
+
+            // Generate QR code
+            var qrDiv = document.getElementById('qrcode');
+            qrDiv.innerHTML = '';
+            new QRCode(qrDiv, {
+                text: qrData,
+                width: 220,
+                height: 220
+            });
+        });
+    </script>
+</body>
+</html>
